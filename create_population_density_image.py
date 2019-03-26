@@ -1,8 +1,10 @@
+import cv2
 import matplotlib.pyplot as plt
 import numpy as np
 import os
 import sys
 from pathlib import Path
+from PIL import Image
 
 module_path = Path(__file__).parent.as_posix()
 sys.path.append(module_path)
@@ -92,5 +94,12 @@ assert(np.min(stitched_array) == 0.0), 'The normalized matrix should have minimu
 
 #Rescale array values to 0-255 for plotting and display the image
 im = np.uint8(stitched_array*255)
-plt.imshow(im, cmap='gray')
+
+#The image is very high resolution, we will compress it before outputting it
+im_compressed = cv2.resize(im, dsize=(21600,10800), interpolation=cv2.INTER_CUBIC)
+plt.imshow(im_compressed, cmap='gray')
 plt.show()
+
+#Save the array as a .png file
+png = Image.fromarray(im_compressed)
+png.save("population_density.png")
