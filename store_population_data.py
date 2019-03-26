@@ -17,9 +17,11 @@ for i in range(8):
     t = time.time()
     pane = np.loadtxt(Path(path, files[i]), dtype=np.float16, skiprows=6) #First 6 rows are header lines, skip them
     elapsed = time.time() - t
+    
     #Print a progress message to the user after the current file has been parsed
     print('File {0} processed, took {1} seconds\n'.format(i+1, elapsed))
     pane[(pane == -10000) | (pane == np.inf)] = 0
+    
     #Save the numpy array in the same directory as the ASCII files
     np.save(Path(path, 'pane{}.npy'.format(i+1)), pane)
 
