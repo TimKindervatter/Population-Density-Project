@@ -49,7 +49,7 @@ def stitch_grid_together(panes):
     """
     
     #Preallocate a contiguous block of memory for speed
-    stitched_array = np.zeros([21600, 43200], dtype = np.float16)
+    stitched_array = np.empty([21600, 43200], dtype = np.float16)
     
     #Each pane is 10800 x 10800 elements. Panes are arranged as shown on page 13 of the documentation found here:
     #http://sedac.ciesin.columbia.edu/binaries/web/sedac/collections/gpw-v4/gpw-v4-documentation-rev11.pdf
@@ -95,11 +95,16 @@ assert(np.min(stitched_array) == 0.0), 'The normalized matrix should have minimu
 #Rescale array values to 0-255 for plotting and display the image
 im = np.uint8(stitched_array*255)
 
+
 #The image is very high resolution, we will compress it before outputting it
-im_compressed = cv2.resize(im, dsize=(21600,10800), interpolation=cv2.INTER_CUBIC)
-plt.imshow(im_compressed, cmap='gray')
+im_compressed = cv2.resize(im, dsize=(8640,4320), interpolation=cv2.INTER_CUBIC)
+
+cmap = plt.get_cmap('copper')
+
+im_colored = np.uint8(cmap(im_compressed)*255)
+plt.imshow(im_colored)
 plt.show()
 
 #Save the array as a .png file
-png = Image.fromarray(im_compressed)
-png.save("population_density.png")
+png = Image.fromarray(im_colored)
+png.save("population_density_colormap.png")
