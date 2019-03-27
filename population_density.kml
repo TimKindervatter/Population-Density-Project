@@ -1,11 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2">
-    <Document id="11739">
-        <GroundOverlay id="11740">
+    <Document id="5054">
+        <GroundOverlay id="5055">
             <name>Population Density</name>
-            <Icon id="11741">
-                <href>population_density.png</href>
+            <Icon id="5056">
+                <href>population_density_colormap.png</href>
             </Icon>
+            <LatLonBox>
+                <north>90</north>
+                <south>-90</south>
+                <east>180</east>
+                <west>-180</west>
+            </LatLonBox>
         </GroundOverlay>
     </Document>
 </kml>
